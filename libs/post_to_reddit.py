@@ -1,6 +1,6 @@
 import praw
 
-def init_post():
+def init_post(new_track_data):
     app_account_code = '1ybYEh8DSkdWj9Ph3WqxlCdqLgs'
     app_refresh_token = '50227942-kUCyxbRIYn4GsxwJC93mOdOpkVQ'
 
@@ -9,4 +9,4 @@ def init_post():
                          client_secret='dSmmkic1q-dI8cexdWhUNFLo24w',
                          redirect_uri='http://127.0.0.1:65010/authorize_callback')
     r.refresh_access_information(app_refresh_token)
-    r.submit(subreddit='HipHopHeads', title='Test', text='Test')
+    r.submit(subreddit='HipHopHeads', title=new_track_data.title, text=None, url=new_track_data.permalink_url)
