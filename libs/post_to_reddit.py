@@ -1,12 +1,27 @@
 import praw
+from .settings import reddit_conf
+
 
 def init_post(new_track_data):
-    app_account_code = '1ybYEh8DSkdWj9Ph3WqxlCdqLgs'
-    app_refresh_token = '50227942-kUCyxbRIYn4GsxwJC93mOdOpkVQ'
+    app_refresh_token = reddit_conf.get('app_refresh_token')
+    client_id = reddit_conf.get('client_id')
+    client_secret = reddit_conf.get('client_secret')
+    redirect_uri = reddit_conf.get('redirect_uri')
 
+    subreddit = 'HipHopHeads'
+    title = new_track_data.get('title')
+    url = new_track_data.get('url')
+
+    print('Initialize new reddit class')
     r = praw.Reddit('OAuth testing example by u/TheFreshBot ver 0.1')
-    r.set_oauth_app_info(client_id='GoQp4XK8LGYGgA',
-                         client_secret='dSmmkic1q-dI8cexdWhUNFLo24w',
-                         redirect_uri='http://127.0.0.1:65010/authorize_callback')
+    print('Setting oauth app info')
+    r.set_oauth_app_info(client_id=client_id,
+                         client_secret=client_secret,
+                         redirect_uri=redirect_uri)
+    print('Setting refresh access information')
     r.refresh_access_information(app_refresh_token)
-    r.submit(subreddit='HipHopHeads', title=new_track_data.title, text=None, url=new_track_data.permalink_url)
+    print('Submitting new post:')
+    print(title)
+    print(url)
+    r.submit(subreddit=subreddit, title=title, text=None, url=url)
+    print('New post successfully submitted.')
