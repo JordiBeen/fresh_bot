@@ -43,8 +43,11 @@ def init_detection():
         {
             'name': 'logic',
             'user_id': '56873359'
-        }
-
+        },
+	{
+	    'name': 'hiphopnewtracks',
+	    'user_id': '183201121'
+	}
     ]
 
     for artist in artists:
@@ -59,13 +62,21 @@ def init_detection():
 def save_new_track(track, saved_tracks):
     new_track_dict = {'artist': track.user.get('username'), 'title': track.title}
     saved_tracks['data'][track.id] = new_track_dict
+    username = track.user.get('username')
+
+    title = '[FRESH] '
+    if username != 'hiphopnewtracks':
+        title += username
+        title += ' - '
+    title += track.title
+
 
     print('Saving new track to the database')
     with open('data/tracks.json', 'w') as data_file:
         json.dump(saved_tracks, data_file)
 
     new_track_data = {
-        'title': '[FRESH] ' + track.user.get('username') + ' - ' + track.title,
+        'title': title,
         'url': track.permalink_url
     }
 
