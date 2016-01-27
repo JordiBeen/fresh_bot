@@ -5,7 +5,6 @@ import soundcloud
 from .settings import soundcloud_settings
 from .post_to_reddit import init_post
 
-
 def init_detection():
     client_id = soundcloud_settings.get('client_id')
     client_secret = soundcloud_settings.get('client_secret')
@@ -44,10 +43,42 @@ def init_detection():
             'name': 'logic',
             'user_id': '56873359'
         },
-	{
-	    'name': 'hiphopnewtracks',
-	    'user_id': '183201121'
-	}
+        {
+            'name': 'hiphopnewtracks',
+            'user_id': '183201121'
+        },
+        {
+            'name': 'travis_scott',
+            'user_id': '40174345'
+        },
+        {
+            'name': 'fetty_wap',
+            'user_id': '35225382'
+        },
+        {
+            'name': 'future',
+            'user_id': '7436630'
+        },
+        {
+            'name': 'big_sean',
+            'user_id': '4803918'
+        },
+        {
+            'name': 'top_dawg_ent',
+            'user_id': '2171095'
+        },
+        {
+            'name': 'young_thug',
+            'user_id': '11877500'
+        },
+        {
+            'name': 'bryson_tiller',
+            'user_id': '3197094'
+        },
+        {
+            'name': 'dreamchaser_records',
+            'user_id': '38372223'
+        }
     ]
 
     for artist in artists:
@@ -64,12 +95,13 @@ def save_new_track(track, saved_tracks):
     saved_tracks['data'][track.id] = new_track_dict
     username = track.user.get('username')
 
+    print(username)
+    group_users = ['hiphopnewtracks', 'TopDawgEnt', 'octobersveryown', 'Dreamchasers Records', 'TeamVisionary']
     title = '[FRESH] '
-    if username != 'hiphopnewtracks':
+    if username not in group_users:
         title += username
         title += ' - '
     title += track.title
-
 
     print('Saving new track to the database')
     with open('data/tracks.json', 'w') as data_file:
