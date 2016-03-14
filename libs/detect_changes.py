@@ -82,12 +82,14 @@ def init_detection():
     ]
 
     for artist in artists:
-        new_track = client.get('/users/{}/tracks'.format(artist.get('user_id')), limit=1)[0]
+        new_track = client.get('/users/{}/tracks'.format(artist.get('user_id')), limit=1)
 
-        if str(new_track.id) not in saved_tracks['data']:
-            print('Detected new track:')
-            print(new_track.user.get('username') + ' - ' + new_track.title)
-            save_new_track(new_track, saved_tracks)
+        if new_track:
+            new_track = new_track[0]
+            if str(new_track.id) not in saved_tracks['data']:
+                print('Detected new track:')
+                print(new_track.user.get('username') + ' - ' + new_track.title)
+                save_new_track(new_track, saved_tracks)
 
 
 def save_new_track(track, saved_tracks):
